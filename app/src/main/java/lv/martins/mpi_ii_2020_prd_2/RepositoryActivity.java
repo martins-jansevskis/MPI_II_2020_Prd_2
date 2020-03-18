@@ -17,12 +17,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class RepositoryActivity extends AppCompatActivity {
 
+    ArrayList<String> mylist = new ArrayList<String>();
+    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
+            "WebOS","Ubuntu","Windows7","Max OS X"};
 
 
     @Override
@@ -32,7 +39,10 @@ public class RepositoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final TextView textView = (TextView) findViewById(R.id.textView);
+        final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.covid_listview_item, mylist);
+
+        ListView listView = (ListView) findViewById(R.id.covid_list);
+        listView.setAdapter(adapter);
 
         // Instantiate the RequestQueue.
 
@@ -45,7 +55,9 @@ public class RepositoryActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("Praktiskais", "success:" + response);
-                    textView.setText("Covid feed: "+ response);
+//                    textView.setText("Covid feed: "+ response);
+                    mylist.add("new element");
+                    adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
 
