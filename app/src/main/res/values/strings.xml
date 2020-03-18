@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MPI_II_2020_Prd_2</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_repository">RepositoryActivity</string>
+    <string name="title_activity_repo2">Repo2Activity</string>
+    <string name="toolbar_title">Title</string>
+</resources>
