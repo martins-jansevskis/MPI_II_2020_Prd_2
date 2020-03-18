@@ -17,10 +17,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONObject;
 
 public class RepositoryActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,10 @@ public class RepositoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final TextView textView = (TextView) findViewById(R.id.textView);
+
         // Instantiate the RequestQueue.
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://newsapi.org/v2/top-headlines?q=covid-19&?country=lv&from=2020-03-14&sortBy=publishedAt&apiKey=7aded4da9fcd4dee808447686e76b561";
 
@@ -39,6 +45,7 @@ public class RepositoryActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("Praktiskais", "success:" + response);
+                    textView.setText("Covid feed: "+ response);
                 }
             }, new Response.ErrorListener() {
 
