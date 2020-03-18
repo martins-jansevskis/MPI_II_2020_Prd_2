@@ -31,27 +31,23 @@ public class RepositoryActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://newsapi.org/v2/top-headlines?q=covid-19&?country=lv&from=2020-03-14&sortBy=publishedAt&apiKey=7aded4da9fcd4dee808447686e76b561";
+        String url ="https://newsapi.org/v2/top-headlines?q=covid-19&?country=lv&from=2020-03-14&sortBy=publishedAt&apiKey=7aded4da9fcd4dee808447686e76b561";
 
        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject response) {
-//                        textView.setText("Response: " + response.toString());
                     Log.i("Praktiskais", "success:" + response);
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    // TODO: Handle error
                     Log.i("Praktiskais", "error:" + error.toString());
                 }
             });
 
-        // Access the RequestQueue through your singleton class.
-//                MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
