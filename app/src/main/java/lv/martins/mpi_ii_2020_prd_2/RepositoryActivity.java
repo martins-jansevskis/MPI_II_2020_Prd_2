@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -28,8 +29,6 @@ import java.util.ArrayList;
 public class RepositoryActivity extends AppCompatActivity {
 
     ArrayList<String> mylist = new ArrayList<String>();
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
-            "WebOS","Ubuntu","Windows7","Max OS X"};
 
 
     @Override
@@ -55,8 +54,22 @@ public class RepositoryActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i("Praktiskais", "success:" + response);
-//                    textView.setText("Covid feed: "+ response);
-                    mylist.add("new element");
+                    try {
+                        JSONArray articles = response.getJSONArray("articles");
+                        Log.i("Praktiskais", articles.toString());
+
+//                      izveidot iterāciju cauri articles
+                        for (int i = 0; i < articles.length(); i++) {
+                            JSONObject article = articles.getJSONObject(i);
+
+                            mylist.add(article.getString("title"));
+                        }
+                    } catch (Exception e) {
+
+                    }
+
+
+
                     adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
