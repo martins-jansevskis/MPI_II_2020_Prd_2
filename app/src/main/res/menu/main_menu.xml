@@ -6,5 +6,5 @@
         android:icon="@android:drawable/ic_input_add"
         app:showAsAction="never"
         android:id="@+id/repo"
-        android:title="Repository" />
+        android:title="Covid" />
 </menu>
