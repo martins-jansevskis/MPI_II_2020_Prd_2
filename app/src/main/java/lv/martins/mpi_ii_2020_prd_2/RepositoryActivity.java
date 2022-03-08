@@ -9,7 +9,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -73,27 +75,25 @@ public class RepositoryActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDateandTime = sdf.format(new Date());
-        String url ="https://newsapi.org/v2/top-headlines?q=covid-19&?country=lv&from="+currentDateandTime+"&sortBy=publishedAt&apiKey=7aded4da9fcd4dee808447686e76b561";
-
-       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        String url = "https://api.spaceflightnewsapi.net/v3/articles";
+       JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(JSONArray response) {
+                    Log.i("Praktiskais", "response:" + response.toString());
                     try {
-                        JSONArray articles = response.getJSONArray("articles");
-                        for (int i = 0; i < articles.length(); i++) {
-                            JSONObject article = articles.getJSONObject(i);
+//                        JSONArray articles = response.getJSONArray("articles");
+                        for (int i = 0; i < response.length(); i++) {
+//                            JSONObject article = response.getJSONObject(i);
+                            JSONObject article = response.getJSONObject(i);
                             titles.add(article.getString("title"));
-                            descriptions.add(article.getString("description"));
-                            urls.add(article.getString("url"));
-                            images.add(article.getString("urlToImage"));
+                            descriptions.add("");
+                            urls.add("");
+                            images.add("");
 
                         }
                     } catch (Exception e) {
-
+                        Log.i("Praktiskais", "error:" + e.toString());
                     }
 
                     adapter.notifyDataSetChanged();
@@ -169,7 +169,7 @@ public class RepositoryActivity extends AppCompatActivity {
             TextView subtitleText = (TextView) rowView.findViewById(R.id.description);
 
             titleText.setText(maintitle.get(position));
-            Picasso.get().load(images.get(position)).into(imageView);
+          //  Picasso.get().load(images.get(position)).into(imageView);
 //            imageView.setImageResource();
             subtitleText.setText(description.get(position));
 
