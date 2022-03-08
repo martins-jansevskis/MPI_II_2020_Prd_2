@@ -76,20 +76,18 @@ public class RepositoryActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://api.spaceflightnewsapi.net/v3/articles";
-       JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
                     Log.i("Praktiskais", "response:" + response.toString());
                     try {
-//                        JSONArray articles = response.getJSONArray("articles");
                         for (int i = 0; i < response.length(); i++) {
-//                            JSONObject article = response.getJSONObject(i);
                             JSONObject article = response.getJSONObject(i);
                             titles.add(article.getString("title"));
-                            descriptions.add("");
-                            urls.add("");
-                            images.add("");
+                            descriptions.add(article.getString("summary"));
+                            urls.add(article.getString("url"));
+                            images.add(article.getString("imageUrl"));
 
                         }
                     } catch (Exception e) {
@@ -169,7 +167,7 @@ public class RepositoryActivity extends AppCompatActivity {
             TextView subtitleText = (TextView) rowView.findViewById(R.id.description);
 
             titleText.setText(maintitle.get(position));
-          //  Picasso.get().load(images.get(position)).into(imageView);
+            Picasso.get().load(images.get(position)).into(imageView);
 //            imageView.setImageResource();
             subtitleText.setText(description.get(position));
 
